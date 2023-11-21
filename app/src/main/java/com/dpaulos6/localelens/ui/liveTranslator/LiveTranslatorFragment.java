@@ -28,6 +28,7 @@ public class LiveTranslatorFragment extends Fragment
     binding = FragmentLiveTranslatorBinding.inflate(inflater, container, false);
     View root = binding.getRoot();
 
+  // Launch camera on fragment start
     try {
       Intent in = new Intent();
       in.setAction(MediaStore.ACTION_VIDEO_CAPTURE);
