@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.dpaulos6.localelens.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_liveTranslator"
+        android:name="com.dpaulos6.localelens.ui.liveTranslator.LiveTranslatorFragment"
+        android:label="@string/menu_liveTranslator"
+        tools:layout="@layout/fragment_live_translator" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.dpaulos6.localelens.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_staticTranslator"
+        android:name="com.dpaulos6.localelens.ui.staticTranslator.StaticTranslatorFragment"
+        android:label="@string/menu_staticTranslator"
+        tools:layout="@layout/fragment_static_translator" />
 </navigation>

@@ -1,18 +1,18 @@
-package com.dpaulos6.localelens.ui.slideshow;
+package com.dpaulos6.localelens.ui.liveTranslator;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel
+public class LiveTranslatorViewModel extends ViewModel
 {
 
   private final MutableLiveData<String> mText;
 
-  public SlideshowViewModel()
+  public LiveTranslatorViewModel()
   {
     mText = new MutableLiveData<>();
-    mText.setValue("This is slideshow fragment");
+    mText.setValue("This is live translator fragment");
   }
 
   public LiveData<String> getText()
