@@ -14,7 +14,6 @@ import com.dpaulos6.localelens.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment
 {
-
   private FragmentHomeBinding binding;
 
   public View onCreateView(@NonNull LayoutInflater inflater,

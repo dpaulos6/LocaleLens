@@ -1,6 +1,8 @@
 package com.dpaulos6.localelens.ui.liveTranslator;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -9,14 +11,27 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.camera.core.Camera;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.dpaulos6.localelens.MainActivity;
+import com.dpaulos6.localelens.R;
 import com.dpaulos6.localelens.databinding.FragmentLiveTranslatorBinding;
+import com.google.common.util.concurrent.ListenableFuture;
+
+import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 public class LiveTranslatorFragment extends Fragment
 {
-
+  private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
   private FragmentLiveTranslatorBinding binding;
 
   public View onCreateView(@NonNull LayoutInflater inflater,
@@ -28,19 +43,30 @@ public class LiveTranslatorFragment extends Fragment
     binding = FragmentLiveTranslatorBinding.inflate(inflater, container, false);
     View root = binding.getRoot();
 
-    // Launch camera on fragment start
-    // Camera is currently working
-    try {
-      Intent in = new Intent();
-      in.setAction(MediaStore.ACTION_VIDEO_CAPTURE);
-      startActivity(in);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
 
-    final TextView textView = binding.textLiveTranslator;
-    liveTranslatorViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+    cameraProviderFuture.addListener(() -> {
+      try {
+        ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+        bindPreview(cameraProvider);
+      } catch (ExecutionException | InterruptedException e) {}
+    }, ContextCompat.getMainExecutor(requireContext()));
+
     return root;
+  }
+
+  void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
+    Preview preview = new Preview.Builder()
+        .build();
+
+    CameraSelector cameraSelector = new CameraSelector.Builder()
+        .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+        .build();
+
+    PreviewView previewView =((MainActivity) requireContext()).findViewById(R.id.previewView);
+    preview.setSurfaceProvider(previewView.getSurfaceProvider());
+
+    Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview);
   }
 
   @Override
