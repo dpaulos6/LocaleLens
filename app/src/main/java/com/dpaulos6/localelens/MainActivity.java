@@ -24,7 +24,6 @@ import com.dpaulos6.localelens.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity
 {
-
   private AppBarConfiguration mAppBarConfiguration;
   private ActivityMainBinding binding;
 
