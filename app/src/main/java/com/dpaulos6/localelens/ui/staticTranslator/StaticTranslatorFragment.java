@@ -33,23 +33,23 @@ public class StaticTranslatorFragment extends Fragment
 {
 
   ActivityResultLauncher<Intent> fileLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-          result->{
-            Intent res = result.getData();
-            if(res != null && res.getData() != null) {
-              Uri caminhoParaoFicheiro = res.getData();
-              try {
-                InputStream stream = requireActivity().getContentResolver().openInputStream(caminhoParaoFicheiro);
-                Bitmap imagem = BitmapFactory.decodeStream(stream);
+    result->{
+      Intent res = result.getData();
+      if(res != null && res.getData() != null) {
+        Uri caminhoParaoFicheiro = res.getData();
+        try {
+          InputStream stream = requireActivity().getContentResolver().openInputStream(caminhoParaoFicheiro);
+          Bitmap imagem = BitmapFactory.decodeStream(stream);
 
-                ImageView img = requireActivity().findViewById(R.id.imgView);
-                Glide.with(this).load(imagem).into(img);
+          ImageView img = requireActivity().findViewById(R.id.imgView);
+          Glide.with(this).load(imagem).into(img);
 
-              } catch (FileNotFoundException e)
-              {
-                Log.d("MDlog", "No pic");
-              }
-            }
-          });
+        } catch (FileNotFoundException e)
+        {
+          Log.d("MDlog", "No pic");
+        }
+      }
+    });
 
   private FragmentStaticTranslatorBinding binding;
 
@@ -62,17 +62,14 @@ public class StaticTranslatorFragment extends Fragment
     binding = FragmentStaticTranslatorBinding.inflate(inflater, container, false);
     View root = binding.getRoot();
 
+    Intent inFile = new Intent(Intent.ACTION_PICK);
+    inFile.setType("image/*");
+    fileLauncher.launch(inFile);
+
 
     final TextView textView = binding.textStaticTranslator;
     staticTranslatorViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
     return root;
-  }
-
-  public void pesquisarFicheiro(View view)
-  {
-    Intent inFile = new Intent(Intent.ACTION_PICK);
-    inFile.setType("image/*");
-    fileLauncher.launch(inFile);
   }
 
   @Override
