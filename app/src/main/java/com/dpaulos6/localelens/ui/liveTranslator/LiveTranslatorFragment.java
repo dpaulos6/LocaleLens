@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,14 +26,18 @@ import com.dpaulos6.localelens.MainActivity;
 import com.dpaulos6.localelens.R;
 import com.dpaulos6.localelens.databinding.FragmentLiveTranslatorBinding;
 import com.google.common.util.concurrent.ListenableFuture;
+import org.opencv.android.CameraBridgeViewBase;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-public class LiveTranslatorFragment extends Fragment
+public class LiveTranslatorFragment extends Fragment implements CameraBridgeViewBase.CvCameraViewFrame
 {
   private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
   private FragmentLiveTranslatorBinding binding;
+  private CameraBridgeViewBase mOpenCvCameraView;
 
   public View onCreateView(@NonNull LayoutInflater inflater,
                            ViewGroup container, Bundle savedInstanceState)
@@ -65,6 +70,10 @@ public class LiveTranslatorFragment extends Fragment
 
     PreviewView previewView =((MainActivity) requireContext()).findViewById(R.id.previewView);
     preview.setSurfaceProvider(previewView.getSurfaceProvider());
+
+    mOpenCvCameraView = new CameraBridgeViewBase(requireContext(), null);
+    mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
+    mOpenCvCameraView.setCvCameraViewListener(this);
 
     Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview);
   }

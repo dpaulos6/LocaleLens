@@ -1,6 +1,18 @@
 plugins {
   id("com.android.application")
-  id("org.jetbrains.kotlin.android")
+  /*id("org.jetbrains.kotlin.android")*/
+  /*kotlin("android") version "1.9.10" //1.5.31*/
+  id("androidx.navigation.safeargs") version "2.5.3" apply true
+}
+
+buildscript {
+  repositories {
+    google()
+  }
+  dependencies {
+    val nav_version = "2.5.3"
+    classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
+  }
 }
 
 android {
@@ -29,12 +41,17 @@ android {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
+  /*kotlinOptions {
+    jvmTarget = "1.8"
+  }*/
+
   buildFeatures {
     viewBinding = true
   }
 }
 
 dependencies {
+  implementation("androidx.core:core-ktx:1.12.0")
   implementation("com.github.bumptech.glide:glide:4.15.1")
   implementation("androidx.appcompat:appcompat:1.6.1")
   implementation("com.google.android.material:material:1.10.0")
@@ -77,6 +94,18 @@ dependencies {
   implementation("com.google.android.gms:play-services-tflite-gpu:16.2.0")
 
   testImplementation("junit:junit:4.13.2")
+  testImplementation("androidx.test:rules:1.4.0")
+  testImplementation("androidx.test:runner:1.4.0")
+  testImplementation("androidx.test.espresso:espresso-core:3.4.0")
+  testImplementation("org.robolectric:robolectric:4.4")
   androidTestImplementation("androidx.test.ext:junit:1.1.5")
+  androidTestImplementation("androidx.test:core:1.4.0")
+  androidTestImplementation("androidx.test:rules:1.4.0")
+  androidTestImplementation("androidx.test:runner:1.4.0")
   androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+  implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.0")
+  // Import the GPU delegate plugin Library for GPU inference
+  implementation("org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.0")
+  implementation("org.tensorflow:tensorflow-lite-gpu:2.9.0")
 }
