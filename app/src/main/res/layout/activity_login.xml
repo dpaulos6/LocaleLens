@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    tools:context=".Login">
+
+    <TextView
+        android:id="@+id/textView"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Login" />
+
+    <EditText
+        android:id="@+id/edemail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:padding="20dp"
+        android:inputType="text"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/edpassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:padding="20dp"
+        android:inputType="text"
+        android:hint="Password" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnlogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="accountLogin"
+        android:text="Login" />
+
+    <Button
+        android:id="@+id/btnregister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:onClick="createAccount"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Register Account" />
+</LinearLayout>
